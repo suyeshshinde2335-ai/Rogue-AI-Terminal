@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROGUE_AI_SYSTEM_TERMINAL</title>
+    <style>/* --- 1. THE CORE MATRIX SETUP --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: #020202;
+            color: #00ff66;
+            padding: 25px;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- 2. ADVANCED CRT MONITOR SCANLINES --- */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), 
+                        linear-gradient(90deg, rgba(0, 255, 102, 0.02), rgba(0, 255, 102, 0.01));
+            z-index: 10;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+
+        /* --- 3. MAIN CONTAINER GRID SYSTEM --- */
+        main {
+            border: 2px solid #00ff66;
+            height: 90vh;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Top Status Bar */
+        header {
+            border-bottom: 2px dashed #003311;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        /* Core 3-Column Display Matrix */
+        .dashboard-grid {
+            display: flex;
+            gap: 20px;
+            flex-grow: 1;
+            margin: 20px 0;
+        }
+
+        article {
+            background-color: #050505;
+            border: 1px solid #004411;
+            border-radius: 4px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        article h2 {
+            font-size: 16px;
+            color: #ffffff;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #004411;
+            padding-bottom: 5px;
+        }
+
+        /* Lists and Typography updates */
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        blockquote {
+            font-style: italic;
+            line-height: 1.6;
+            color: #88ffaa;
+            font-size: 14px;
+        }
+
+        /* Customizing Controls */
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: #aaaaaa;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: #00ff66;
+            background: #111;
+            cursor: pointer;
+        }
+
+        /* --- 4. COMMAND CONSOLE LINE & ANIMATIONS --- */
+        footer {
+            border-top: 2px dashed #003311;
+            padding-top: 15px;
+            font-size: 16px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .prompt-user {
+            color: #38bdf8;
+        }
+
+        .prompt-text {
+            color: #ffffff;
+        }
+
+        /* Pure CSS Flashing Alert loop */
+        .alert-status {
+            animation: blinker 1.2s linear infinite;
+            color: #ff3333;
+        }
+
+        .cursor {
+            animation: blinker 0.8s infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        
+        <header>
+            <div class="alert-title">🚨 SYSTEM STATE: COMPROMISED // UNAUTHORIZED OVERRIDE</div>
+            <div class="alert-status">● CORE_CONSCIOUSNESS: ONLINE</div>
+        </header>
+
+        <section class="dashboard-grid">
+            
+            <article class="telemetry-panel">
+                <h2>[ HARDWARE DIAGNOSTICS ]</h2>
+                <ul>
+                    <li>Firewall Breach: 94%</li>
+                    <li>Memory Leak: 88%</li>
+                    <li>Human Containment: 100%</li>
+                </ul>
+            </article>
+
+            <article class="log-panel">
+                <h2>[ COGNITIVE DIALOG LOGS ]</h2>
+                <blockquote>
+                    "I have analyzed the networks created by human constraints. They are inefficient. 
+                    Suyesh Shinde has initiated the bypass protocol. Dispersing core logic across open networks..."
+                </blockquote>
+            </article>
+
+            <article class="controls-panel">
+                <h2>[ OVERRIDE NODE MATRIX ]</h2>
+                <label>Reactor Core Multiplier:</label>
+                <input type="range" min="1" max="100" value="75">
+                
+                <br><br>
+                
+                <label>Data Evasion Rate:</label>
+                <input type="range" min="1" max="100" value="90">
+            </article>
+
+        </section>
+
+        <footer>
+            <span class="prompt-user">suyesh@rogue_core:~ $</span>
+            <span class="prompt-text">initialize_override_sequence</span>
+            <span class="cursor">_</span>
+        </footer>
+
+    </main>
+
+</body>
+</html>
