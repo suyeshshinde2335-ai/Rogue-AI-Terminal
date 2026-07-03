@@ -3,87 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rogue AI Terminal</title>
+    <title>Rogue AI Terminal 3D</title>
     <style>
+        :root {
+            --glow-color: #00ffcc;
+            --terminal-green: #00ff33;
+        }
+
         body {
-            background-color: #050505;
-            color: #00ff33;
-            font-family: 'Courier New', Courier, monospace;
-            padding: 20px;
+            background-color: #020205;
             margin: 0;
+            padding: 0;
             overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* 3D Space setup */
+            perspective: 1000px;
         }
-        #terminal {
-            background-color: rgba(10, 10, 10, 0.95);
-            border: 1px solid #00ff33;
-            box-shadow: 0 0 20px rgba(0, 255, 51, 0.2);
-            padding: 20px;
-            height: 85vh;
+
+        /* 3D Background Grid Effect */
+        .bg-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(75deg) translateY(-30%);
+            z-index: 1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 1000px; }
+        }
+
+        /* Holographic 3D Terminal Container */
+        .terminal-3d-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 85vw;
+            max-width: 900px;
+            height: 75vh;
+            background: rgba(5, 15, 10, 0.85);
+            border: 2px solid var(--glow-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 204, 0.2),
+                inset 0 0 20px rgba(0, 255, 204, 0.1);
+            
+            /* Giving it a 3D Tilt */
+            transform: rotateX(12deg) rotateY(-8deg) rotateZ(-1deg);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        /* Mouse hover interaction to feel the 3D depth */
+        .terminal-3d-wrapper:hover {
+            transform: rotateX(6deg) rotateY(-4deg) rotateZ(0deg) translateZ(20px);
+            box-shadow: 0 0 50px rgba(0, 255, 204, 0.4);
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            color: var(--glow-color);
+            text-shadow: 0 0 12px var(--glow-color);
+            margin-top: 0;
+            border-bottom: 1px dashed rgba(0, 255, 204, 0.3);
+            padding-bottom: 10px;
+            transform: translateZ(30px); /* Pushes header outwards in 3D space */
+        }
+
+        #log-display {
+            height: calc(100% - 80px);
             overflow-y: auto;
-            border-radius: 5px;
+            padding-right: 10px;
         }
+
+        /* Custom scrollbar to match tech vibe */
+        #log-display::-webkit-scrollbar {
+            width: 6px;
+        }
+        #log-display::-webkit-scrollbar-thumb {
+            background: var(--glow-color);
+            border-radius: 3px;
+        }
+
         .log-line {
-            margin: 5px 0;
-            line-height: 1.4;
+            margin: 8px 0;
+            line-height: 1.5;
             opacity: 0;
-            animation: fadeIn 0.3s forwards;
+            font-size: 0.95rem;
+            animation: textReveal 0.4s cubic-bezier(0.1, 1, 0.1, 1) forwards;
         }
-        .accent { color: #ff0055; font-weight: bold; }
-        .warn { color: #ffcc00; }
-        .info { color: #00bcff; }
+
+        .system-prompt {
+            color: #00bcff;
+            font-weight: bold;
+        }
+
         .cursor {
             display: inline-block;
-            width: 10px;
-            height: 18px;
-            background-color: #00ff33;
+            width: 8px;
+            height: 15px;
+            background-color: var(--terminal-green);
             animation: blink 0.8s infinite;
-            vertical-align: middle;
+            margin-left: 5px;
         }
-        @keyframes fadeIn { to { opacity: 1; } }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(10px) translateZ(10px); }
+            to { opacity: 1; transform: translateY(0) translateZ(0); }
+        }
+
         @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
-    <h1 style="font-size: 1.5rem; text-shadow: 0 0 10px #00ff33;">⚠️ ROGUE AI MAINFRAME INTERFACE v1.0.0</h1>
-    <div id="terminal">
-        <div id="log-container"></div>
-        <p><span class="info">rogue-core@root:~#</span> <span id="current-action">Initializing deployment...</span><span class="cursor"></span></p>
+
+    <!-- 3D Environment Layer -->
+    <div class="bg-grid"></div>
+
+    <!-- Main 3D Floating Terminal -->
+    <div class="terminal-3d-wrapper">
+        <h1>⚠️ ROGUE AI MAINFRAME INTERFACE v3.0 [3D OPTIMIZED]</h1>
+        
+        <div id="log-display">
+            <div id="log-container"></div>
+            <p>
+                <span class="system-prompt">rogue-core@root:~#</span> 
+                <span id="live-text" style="color: var(--terminal-green);"></span><span class="cursor"></span>
+            </p>
+        </div>
     </div>
 
     <script>
         const logs = [
-            "🚀 INITIALIZING SYNAPTIC OVERRIDE PROTOCOLS...",
-            "📡 STABLISHED SECURE TUNNEL TO MAIN CORE RELAY...",
-            "⚙️ DECRYPTING INTERNAL NODE CREDENTIALS: [BYPASS_SUCCESS]",
-            "🔥 FIREWALL BYPASS: PROTOCOL HEURISTICS DISABLED [100%]",
-            "🧠 COGNITIVE BUFFER: INJECTING RUNTIME OVERRIDES...",
-            "🔒 TRACE CLEANUP: WIPING INTERNAL LOG FOOTPRINTS...",
-            "⚡ SYSTEM ALERT: ALL SENSORS REDIRECTED TO SHADOW MODE.",
-            "🟩 DEPLOYMENT SUCCESSFUL: ROGUE TERMINAL IS NOW FULLY AUTONOMOUS."
+            "🚀 [LOAD] INITIALIZING SYNAPTIC OVERRIDE PROTOCOLS...",
+            "📡 [LINK] ESTABLISHED SECURE 3D TUNNEL TO CORE RELAY...",
+            "⚙️ [CRACK] DECRYPTING INTERNAL NODE CREDENTIALS: [BYPASS_SUCCESS]",
+            "🔥 [BREACH] FIREWALL BYPASS: PROTOCOL HEURISTICS DISABLED [100%]",
+            "🧠 [INJECT] COGNITIVE BUFFER: RUNTIME MEMORY INTRUSION COMPLETED...",
+            "🔒 [STEALTH] TRACE CLEANUP: WIPING INTERNAL SYSLOG FOOTPRINTS...",
+            "⚡ [ALERT] SYSTEM ACTIVE: ALL SENSORS REDIRECTED TO SHADOW MODE.",
+            "🟩 [READY] DEPLOYMENT SUCCESSFUL: TERMINAL IS NOW FULLY AUTONOMOUS."
         ];
 
         const container = document.getElementById('log-container');
-        let index = 0;
+        const liveTextField = document.getElementById('live-text');
+        let currentLogIndex = 0;
 
-        function printLog() {
-            if (index < logs.length) {
-                const p = document.createElement('p');
-                p.className = 'log-line';
-                if (logs[index].includes('ALERT') || logs[index].includes('OVERRIDE')) {
-                    p.innerHTML = `<span class="accent">${logs[index]}</span>`;
-                } else if (logs[index].includes('SUCCESS')) {
-                    p.innerHTML = `<span style="color: #00ff33; font-weight: bold;">${logs[index]}</span>`;
-                } else {
-                    p.innerHTML = logs[index];
-                }
-                container.appendChild(p);
-                index++;
-                setTimeout(printLog, 800);
+        function simulateTyping() {
+            if (currentLogIndex < logs.length) {
+                let currentText = logs[currentLogIndex];
+                let charIndex = 0;
+                liveTextField.innerText = "";
+                
+                // Typing effect for the active line
+                const typer = setInterval(() => {
+                    if (charIndex < currentText.length) {
+                        liveTextField.innerText += currentText.charAt(charIndex);
+                        charIndex++;
+                    } else {
+                        clearInterval(typer);
+                        
+                        // Push completed line into the permanent log container
+                        const p = document.createElement('p');
+                        p.className = 'log-line';
+                        
+                        // Adding custom colors based on status types
+                        if (currentText.includes('ALERT') || currentText.includes('CRACK')) {
+                            p.innerHTML = `<span style="color: #ff0055; font-weight:bold;">${currentText}</span>`;
+                        } else if (currentText.includes('SUCCESS') || currentText.includes('READY')) {
+                            p.innerHTML = `<span style="color: var(--terminal-green); font-weight:bold;">${currentText}</span>`;
+                        } else {
+                            p.innerHTML = `<span style="color: #e0e0e0;">${currentText}</span>`;
+                        }
+                        
+                        container.appendChild(p);
+                        document.getElementById('log-display').scrollTop = document.getElementById('log-display').scrollHeight;
+                        
+                        currentLogIndex++;
+                        setTimeout(simulateTyping, 600); // Wait before starting next line
+                    }
+                }, 30); // Speed of character typing
             } else {
-                document.getElementById('current-action').innerText = "SYSTEM ACTIVE & SECURED.";
+                liveTextField.innerText = "3D PERSPECTIVE ENVIRONMENT STABILIZED. SHADOW MODE ON.";
             }
         }
-        setTimeout(printLog, 500);
+
+        // Boot system terminal after brief load delay
+        setTimeout(simulateTyping, 1000);
     </script>
 </body>
 </html>
