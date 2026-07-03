@@ -3,107 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rogue AI Terminal 3D</title>
+    <title>Rogue AI Terminal - Real 3D Matrix</title>
+    <!-- Three.js Library CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        :root {
-            --glow-color: #00ffcc;
-            --terminal-green: #00ff33;
-        }
-
         body {
-            background-color: #020205;
             margin: 0;
             padding: 0;
+            background-color: #000;
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            user-select: none;
+        }
+
+        /* WebGL Canvas behind everything */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
             height: 100vh;
-            /* 3D Space setup */
-            perspective: 1000px;
-        }
-
-        /* 3D Background Grid Effect */
-        .bg-grid {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: rotateX(75deg) translateY(-30%);
             z-index: 1;
-            animation: gridMove 20s linear infinite;
         }
 
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 1000px; }
-        }
-
-        /* Holographic 3D Terminal Container */
-        .terminal-3d-wrapper {
-            position: relative;
+        /* Futuristic Glassmorphic Floating Terminal Interface */
+        .hologram-ui {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            max-width: 850px;
+            height: 70vh;
             z-index: 10;
-            width: 85vw;
-            max-width: 900px;
-            height: 75vh;
-            background: rgba(5, 15, 10, 0.85);
-            border: 2px solid var(--glow-color);
-            border-radius: 12px;
+            background: rgba(0, 15, 10, 0.45);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 2px solid rgba(0, 255, 204, 0.6);
+            border-radius: 16px;
             padding: 25px;
             box-shadow: 
-                0 0 30px rgba(0, 255, 204, 0.2),
-                inset 0 0 20px rgba(0, 255, 204, 0.1);
-            
-            /* Giving it a 3D Tilt */
-            transform: rotateX(12deg) rotateY(-8deg) rotateZ(-1deg);
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease;
-        }
-
-        /* Mouse hover interaction to feel the 3D depth */
-        .terminal-3d-wrapper:hover {
-            transform: rotateX(6deg) rotateY(-4deg) rotateZ(0deg) translateZ(20px);
-            box-shadow: 0 0 50px rgba(0, 255, 204, 0.4);
+                0 0 40px rgba(0, 255, 204, 0.3),
+                inset 0 0 25px rgba(0, 255, 204, 0.15);
+            color: #00ff33;
+            pointer-events: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         h1 {
-            font-size: 1.4rem;
-            color: var(--glow-color);
-            text-shadow: 0 0 12px var(--glow-color);
+            font-size: 1.3rem;
+            color: #00ffcc;
+            text-shadow: 0 0 15px #00ffcc;
             margin-top: 0;
-            border-bottom: 1px dashed rgba(0, 255, 204, 0.3);
-            padding-bottom: 10px;
-            transform: translateZ(30px); /* Pushes header outwards in 3D space */
+            border-bottom: 1px dashed rgba(0, 255, 204, 0.4);
+            padding-bottom: 12px;
+            letter-spacing: 2px;
         }
 
-        #log-display {
-            height: calc(100% - 80px);
+        #terminal-body {
+            flex-grow: 1;
             overflow-y: auto;
+            margin-top: 10px;
             padding-right: 10px;
         }
 
-        /* Custom scrollbar to match tech vibe */
-        #log-display::-webkit-scrollbar {
+        #terminal-body::-webkit-scrollbar {
             width: 6px;
         }
-        #log-display::-webkit-scrollbar-thumb {
-            background: var(--glow-color);
-            border-radius: 3px;
+        #terminal-body::-webkit-scrollbar-thumb {
+            background: #00ffcc;
+            border-radius: 4px;
         }
 
         .log-line {
-            margin: 8px 0;
-            line-height: 1.5;
-            opacity: 0;
+            margin: 6px 0;
+            line-height: 1.6;
             font-size: 0.95rem;
-            animation: textReveal 0.4s cubic-bezier(0.1, 1, 0.1, 1) forwards;
+            text-shadow: 0 0 5px rgba(0, 255, 51, 0.5);
         }
 
-        .system-prompt {
+        .prompt {
             color: #00bcff;
             font-weight: bold;
         }
@@ -111,15 +91,11 @@
         .cursor {
             display: inline-block;
             width: 8px;
-            height: 15px;
-            background-color: var(--terminal-green);
+            height: 16px;
+            background-color: #00ff33;
             animation: blink 0.8s infinite;
+            vertical-align: middle;
             margin-left: 5px;
-        }
-
-        @keyframes textReveal {
-            from { opacity: 0; transform: translateY(10px) translateZ(10px); }
-            to { opacity: 1; transform: translateY(0) translateZ(0); }
         }
 
         @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
@@ -127,79 +103,152 @@
 </head>
 <body>
 
-    <!-- 3D Environment Layer -->
-    <div class="bg-grid"></div>
+    <!-- Real WebGL 3D Layer -->
+    <div id="canvas-container"></div>
 
-    <!-- Main 3D Floating Terminal -->
-    <div class="terminal-3d-wrapper">
-        <h1>⚠️ ROGUE AI MAINFRAME INTERFACE v3.0 [3D OPTIMIZED]</h1>
-        
-        <div id="log-display">
-            <div id="log-container"></div>
+    <!-- Interface Content Layer -->
+    <div class="hologram-ui" id="terminal-card">
+        <h1>⚠️ ROGUE AI MAINFRAME INTERFACE v4.0 [WEBGL 3D CORE]</h1>
+        <div id="terminal-body">
+            <div id="log-wrapper"></div>
             <p>
-                <span class="system-prompt">rogue-core@root:~#</span> 
-                <span id="live-text" style="color: var(--terminal-green);"></span><span class="cursor"></span>
+                <span class="prompt">rogue-core@root:~#</span> 
+                <span id="typing-field"></span><span class="cursor"></span>
             </p>
         </div>
     </div>
 
     <script>
-        const logs = [
-            "🚀 [LOAD] INITIALIZING SYNAPTIC OVERRIDE PROTOCOLS...",
-            "📡 [LINK] ESTABLISHED SECURE 3D TUNNEL TO CORE RELAY...",
-            "⚙️ [CRACK] DECRYPTING INTERNAL NODE CREDENTIALS: [BYPASS_SUCCESS]",
-            "🔥 [BREACH] FIREWALL BYPASS: PROTOCOL HEURISTICS DISABLED [100%]",
-            "🧠 [INJECT] COGNITIVE BUFFER: RUNTIME MEMORY INTRUSION COMPLETED...",
-            "🔒 [STEALTH] TRACE CLEANUP: WIPING INTERNAL SYSLOG FOOTPRINTS...",
-            "⚡ [ALERT] SYSTEM ACTIVE: ALL SENSORS REDIRECTED TO SHADOW MODE.",
-            "🟩 [READY] DEPLOYMENT SUCCESSFUL: TERMINAL IS NOW FULLY AUTONOMOUS."
-        ];
+        // --- 1. THREE.JS 3D ENVIRONMENT SETUP ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        
+        // Camera setup with perspective depth
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 40;
 
-        const container = document.getElementById('log-container');
-        const liveTextField = document.getElementById('live-text');
-        let currentLogIndex = 0;
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
 
-        function simulateTyping() {
-            if (currentLogIndex < logs.length) {
-                let currentText = logs[currentLogIndex];
-                let charIndex = 0;
-                liveTextField.innerText = "";
-                
-                // Typing effect for the active line
-                const typer = setInterval(() => {
-                    if (charIndex < currentText.length) {
-                        liveTextField.innerText += currentText.charAt(charIndex);
-                        charIndex++;
-                    } else {
-                        clearInterval(typer);
-                        
-                        // Push completed line into the permanent log container
-                        const p = document.createElement('p');
-                        p.className = 'log-line';
-                        
-                        // Adding custom colors based on status types
-                        if (currentText.includes('ALERT') || currentText.includes('CRACK')) {
-                            p.innerHTML = `<span style="color: #ff0055; font-weight:bold;">${currentText}</span>`;
-                        } else if (currentText.includes('SUCCESS') || currentText.includes('READY')) {
-                            p.innerHTML = `<span style="color: var(--terminal-green); font-weight:bold;">${currentText}</span>`;
-                        } else {
-                            p.innerHTML = `<span style="color: #e0e0e0;">${currentText}</span>`;
-                        }
-                        
-                        container.appendChild(p);
-                        document.getElementById('log-display').scrollTop = document.getElementById('log-display').scrollHeight;
-                        
-                        currentLogIndex++;
-                        setTimeout(simulateTyping, 600); // Wait before starting next line
-                    }
-                }, 30); // Speed of character typing
-            } else {
-                liveTextField.innerText = "3D PERSPECTIVE ENVIRONMENT STABILIZED. SHADOW MODE ON.";
-            }
+        // Creating an automated 3D Particle Starfield
+        const particleCount = 1500;
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            // Spread particles across 3D coordinates
+            positions[i] = (Math.random() - 0.5) * 100;
+            positions[i+1] = (Math.random() - 0.5) * 100;
+            positions[i+2] = (Math.random() - 0.5) * 100;
+
+            // Cyberpunk colors: Mix of green, neon teal, and blue shades
+            colors[i] = 0.0;                       // R
+            colors[i+1] = Math.random() * 0.8 + 0.2; // G
+            colors[i+2] = Math.random() * 0.6 + 0.4; // B
         }
 
-        // Boot system terminal after brief load delay
-        setTimeout(simulateTyping, 1000);
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        // Designing tech particle shape
+        const material = new THREE.PointsMaterial({
+            size: 0.35,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
+        });
+
+        const particleSystem = new THREE.Points(geometry, material);
+        scene.add(particleSystem);
+
+        // Interactive Mouse Movement Tracking
+        let mouseX = 0, mouseY = 0;
+        const terminalCard = document.getElementById('terminal-card');
+
+        document.addEventListener('mousemove', (event) => {
+            // Normalized coordinates (-1 to 1)
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            // Smoothly tilting the HTML Terminal Card layout dynamically based on cursor
+            terminalCard.style.transform = `translate(-50%, -50%) rotateY(${mouseX * 15}deg) rotateX(${-mouseY * 15}deg)`;
+        });
+
+        // 3D Render Loop Function
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Infinite rotation of particles in space
+            particleSystem.rotation.x += 0.0008;
+            particleSystem.rotation.y += 0.0012;
+
+            // Subtle reaction to mouse position for complete immersion
+            particleSystem.rotation.x += (mouseY * 0.05 - particleSystem.rotation.x) * 0.05;
+            particleSystem.rotation.y += (mouseX * 0.05 - particleSystem.rotation.y) * 0.05;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Screen Resize handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+
+        // --- 2. TERMINAL SIMULATOR AUTOMATION ENGINE ---
+        const logData = [
+            "⚡ [OK] CORE NEURAL NETWORK ENGINE ONLINE...",
+            "⚙️ [BYPASS] ACCESSING QUANTUM LAYER 3 SYSLOG DATA...",
+            "🔓 [BREACH] FIREWALL SENTINELS BYPASSED SUCCESSFUL.",
+            "🧠 [INTRUSION] MEMORY INJECTION ACTIVE ON PORT 8080...",
+            "📡 [LINK] DATA PIPELINE SECURED AND ESTABLISHED...",
+            "💎 [SUCCESS] REALTIME 3D MATRIX ENGINE INITIALIZED."
+        ];
+
+        const logWrapper = document.getElementById('log-wrapper');
+        const typingField = document.getElementById('typing-field');
+        let dataIndex = 0;
+
+        function runTerminal() {
+            if (dataIndex < logData.length) {
+                let textStr = logData[dataIndex];
+                let cIndex = 0;
+                typingField.innerText = "";
+
+                const interval = setInterval(() => {
+                    if (cIndex < textStr.length) {
+                        typingField.innerText += textStr.charAt(cIndex);
+                        cIndex++;
+                    } else {
+                        clearInterval(interval);
+
+                        const div = document.createElement('div');
+                        div.className = 'log-line';
+                        
+                        if (textStr.includes('SUCCESS') || textStr.includes('OK')) {
+                            div.innerHTML = `<span style="color: #00ffcc; font-weight: bold;">${textStr}</span>`;
+                        } else {
+                            div.innerHTML = `<span>${textStr}</span>`;
+                        }
+
+                        logWrapper.appendChild(div);
+                        document.getElementById('terminal-body').scrollTop = document.getElementById('terminal-body').scrollHeight;
+
+                        dataIndex++;
+                        setTimeout(runTerminal, 700);
+                    }
+                }, 40);
+            } else {
+                typingField.innerText = "3D SPACE ARCHITECTURE RUNNING STABLE.";
+            }
+        }
+        setTimeout(runTerminal, 1200);
     </script>
 </body>
 </html>
