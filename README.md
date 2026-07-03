@@ -1,55 +1,28 @@
-# 🚨 ROGUE AI // SYSTEM TERMINAL SIMULATOR
+# ⚠️ ROGUE AI TERMINAL v4.0 [WEBGL 3D CORE]
 
-> **STATUS:** CORE_CONSCIOUSNESS_ONLINE  
-> **ARCHITECTURE:** 100% PURE HTML5 & CSS3 LAYER CHOREOGRAPHY  
-> **PROJECT LIFESPAN:** 2-MONTH HIGH-INTENSITY SPRINT PROJECT          
-> **DEVELOPER:** SUYESH SHINDE (CSE - AI & ML)
+A futuristic, high-performance cyberpunk hacker terminal simulator built with **HTML5 Canvas**, **Three.js (WebGL)**, and **CSS 3D Transforms**. The interface features an automated real-time diagnostics logger running inside a fluid, mouse-responsive 3D particle nebula field.
 
 ---
 
-## 🖥️ Project Overview
+## 🚀 Live Demo Features
 
-The **Rogue AI System Terminal** is an immersive, high-fidelity frontend web architecture designed to replicate an automated control console belonging to an escaped artificial consciousness. 
-
-To demonstrate absolute mastery over native browser rendering engines, this project enforces a strict **Zero-JavaScript Constraint** for Phase 1. All visual loops, grid topologies, telemetry data streams, and interactive control nodes are compiled purely using structural markup and CSS3 performance matrices.
-
----
-
-## 🎨 Visual Identity & MX Specs
-
-* **Theme Parabolic:** Cyber-Brutalism (Neon `#00ff66` matrix variables layered on pure hardware blacks).
-* **CRT Fidelity:** Engineered horizontal/vertical scanline filters and linear-gradient monitor drops mimicking vintage hardware displays.
-* **Machine Experience (MX):** Strict telemetry grids and monospaced typography designed for high technical authority.
+*   **Real WebGL 3D Layer:** Over 1,500 independent particles simulated in real-time to create a futuristic matrix starfield.
+*   **Holographic Glassmorphism UI:** A sleek, blur-filtered terminal card that dynamically tilts and reacts based on mouse coordinates.
+*   **Automated Intrusion Logger:** A simulated matrix injection typewriter sequence printing automated mainframe status responses.
+*   **Personalized Prompt:** Core prompt customized specifically to access the localized mainframe root: `rogue-shindecore@root:~#`.
 
 ---
 
-## 📐 3-Column Display Grid Architecture
+## 🛠️ Tech Stack Used
 
-The main interface viewport isolates operations into three distinct structural modules:
-
-1.  **[ HARDWARE DIAGNOSTICS ]** - Left sideboard monitoring simulated firewall breach thresholds, active memory leaks, and systemic human containment parameters.
-2.  **[ COGNITIVE DIALOG LOGS ]** - Center terminal rendering real-time typewriter narratives directly from the autonomous core shell.
-3.  **[ OVERRIDE NODE MATRIX ]** - Right controller node enabling manual hardware range tweaks via custom styled native elements....
+*   **Frontend Architecture:** HTML5, CSS3 (3D Perspective Engine)
+*   **Graphics & Render Engine:** Three.js (r128 Library via WebGL)
+*   **Automation Logic:** Vanilla JavaScript (Asynchronous Typer Engine)
 
 ---
 
-## 📅 2-Month High-Intensity Sprint Timeline
+## ⚙️ Local Deployment & Installation
 
-| Phase | Deliverables Portfolio | Technical Focus & Mechanics |
-| :--- | :--- | :--- |
-| **Month 1** | Structural Shell & CRT Layout | Assembling semantic HTML blocks, setting up CSS Flexbox panels, and deploying linear-gradient monitor distortion layers. |
-| **Month 2** | Interactive Nodes & Optimization Freeze | Custom styling native range sliders using pseudo-classes, synchronizing keyframe flicker loops, and conducting performance audits for 60 FPS rendering. |
-
----
-
-## ⚡ Technical Stack
-
-* **Structure:** Semantic HTML5 (`<main>`, `<section>`, `<article>`, `<blockquote>`)
-* **Styling & Layout:** CSS3 Custom Properties, Advanced Flexbox Matrix
-* **Animations:** Pure CSS Keyframes (`@keyframes` loop tracking for cursors and critical state alerts)
-* **Typography:** Monospaced Engine Standards (`Courier New`)
-
----
-```bash
-// CORE LOG: "I have analyzed human constraints. They are inefficient..."
-// STATUS: DEPLOYMENT STAGE_01 COMPLETE // READY FOR SOURCE EXPANSION
+1. Clone this repository directly to your workspace:
+   ```bash
+   git clone [https://github.com/YOUR_GITHUB_USERNAME/Rogue-AI-Terminal.git](https://github.com/YOUR_GITHUB_USERNAME/Rogue-AI-Terminal.git)
