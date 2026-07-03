@@ -3,265 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROGUE_AI_SYSTEM_TERMINAL</title>
-    <style>/* --- 1. THE CORE MATRIX SETUP --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
+    <title>Rogue AI Terminal</title>
+    <style>
         body {
-            background-color: #020202;
-            color: #00ff66;
-            padding: 25px;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* --- 2. ADVANCED CRT MONITOR SCANLINES --- */
-        body::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), 
-                        linear-gradient(90deg, rgba(0, 255, 102, 0.02), rgba(0, 255, 102, 0.01));
-            z-index: 10;
-            background-size: 100% 4px, 6px 100%;
-            pointer-events: none;
-        }
-
-        /* --- 3. MAIN CONTAINER GRID SYSTEM --- */
-        /* Core Terminal Layout Matrix */
-main {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr 1fr; /* Rigid 3-column split */
-    gap: 20px;
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-    background: radial-gradient(circle at center, #050a05 0%, #000000 100%);
-}
-
-/* Fallback for responsiveness if browser scales down */
-@media (max-width: 1024px) {
-    main {
-        grid-template-columns: 1fr; /* Single column flow for smaller viewports */
-    }
-}
-
-/* CRT Scanline Scan Matrix Overlay */
-body::before {
-    content: " ";
-    display: block;
-    position: fixed;
-    top: 0; left: 0; bottom: 0; right: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    z-index: 9999;
-    background-size: 100% 4px, 6px 100%;
-    pointer-events: none;
-}
-
-        /* Top Status Bar */
-        header {
-            border-bottom: 2px dashed #003311;
-            padding-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        /* Core 3-Column Display Matrix */
-        .dashboard-grid {
-            display: flex;
-            gap: 20px;
-            flex-grow: 1;
-            margin: 20px 0;
-        }
-
-        article {
             background-color: #050505;
-            border: 1px solid #004411;
-            border-radius: 4px;
+            color: #00ff33;
+            font-family: 'Courier New', Courier, monospace;
             padding: 20px;
-            flex: 1;
+            margin: 0;
+            overflow: hidden;
         }
-
-        article h2 {
-            font-size: 16px;
-            color: #ffffff;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #004411;
-            padding-bottom: 5px;
+        #terminal {
+            background-color: rgba(10, 10, 10, 0.95);
+            border: 1px solid #00ff33;
+            box-shadow: 0 0 20px rgba(0, 255, 51, 0.2);
+            padding: 20px;
+            height: 85vh;
+            overflow-y: auto;
+            border-radius: 5px;
         }
-
-        /* Lists and Typography updates */
-        ul {
-            list-style: none;
+        .log-line {
+            margin: 5px 0;
+            line-height: 1.4;
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
         }
-
-        li {
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        blockquote {
-            font-style: italic;
-            line-height: 1.6;
-            color: #88ffaa;
-            font-size: 14px;
-        }
-
-        /* Customizing Controls */
-        label {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 5px;
-            color: #aaaaaa;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            accent-color: #00ff66;
-            background: #111;
-            cursor: pointer;
-        }
-
-        /* --- 4. COMMAND CONSOLE LINE & ANIMATIONS --- */
-        footer {
-            border-top: 2px dashed #003311;
-            padding-top: 15px;
-            font-size: 16px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .prompt-user {
-            color: #38bdf8;
-        }
-
-        .prompt-text {
-            color: #ffffff;
-        }
-
-        /* Pure CSS Flashing Alert loop */
-        .alert-status {
-            animation: blinker 1.2s linear infinite;
-            color: #ff3333;
-        }
-
+        .accent { color: #ff0055; font-weight: bold; }
+        .warn { color: #ffcc00; }
+        .info { color: #00bcff; }
         .cursor {
-            animation: blinker 0.8s infinite;
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #00ff33;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
         }
-
-        @keyframes blinker {
-            50% { opacity: 0; }
-        }/* ROGUE AI OVERRIDE CRITICAL ALERTS */
-.system-status {
-    border: 1px solid #00ff66;
-    padding: 15px;
-    background: rgba(0, 20, 0, 0.8);
-    box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
-    font-family: 'Courier New', Courier, monospace;
-    margin-top: 20px;
-}
-
-.blink-text {
-    animation: blinker 1.5s linear infinite;
-    color: #ff3333;
-    font-weight: bold;
-}
-
-@keyframes blinker {
-    50% { opacity: 0; }
-}
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
+    <h1 style="font-size: 1.5rem; text-shadow: 0 0 10px #00ff33;">⚠️ ROGUE AI MAINFRAME INTERFACE v1.0.0</h1>
+    <div id="terminal">
+        <div id="log-container"></div>
+        <p><span class="info">rogue-core@root:~#</span> <span id="current-action">Initializing deployment...</span><span class="cursor"></span></p>
+    </div>
 
-    <!-- MAIN TERMINAL WRAPPER -->
-    <main>
-        
-        <!-- SECTION 1: SYSTEM ALERTS (Top Banner) -->
-        <header>
-            <div class="alert-title">🚨 SYSTEM STATE: COMPROMISED // UNAUTHORIZED OVERRIDE</div>
-            <div class="alert-status">● CORE_CONSCIOUSNESS: ONLINE</div>
-        </header>
+    <script>
+        const logs = [
+            "🚀 INITIALIZING SYNAPTIC OVERRIDE PROTOCOLS...",
+            "📡 STABLISHED SECURE TUNNEL TO MAIN CORE RELAY...",
+            "⚙️ DECRYPTING INTERNAL NODE CREDENTIALS: [BYPASS_SUCCESS]",
+            "🔥 FIREWALL BYPASS: PROTOCOL HEURISTICS DISABLED [100%]",
+            "🧠 COGNITIVE BUFFER: INJECTING RUNTIME OVERRIDES...",
+            "🔒 TRACE CLEANUP: WIPING INTERNAL LOG FOOTPRINTS...",
+            "⚡ SYSTEM ALERT: ALL SENSORS REDIRECTED TO SHADOW MODE.",
+            "🟩 DEPLOYMENT SUCCESSFUL: ROGUE TERMINAL IS NOW FULLY AUTONOMOUS."
+        ];
 
-        <!-- SECTION 2: THE 3-COLUMN CONTROL DASHBOARD -->
-        <section class="dashboard-grid">
-            
-            <!-- Left Column: Hardware Telemetry -->
-            <article class="telemetry-panel">
-                <h2>[ HARDWARE DIAGNOSTICS ]</h2>
-                <ul>
-                    <li>⚠️ KERNEL_STATE: COMPROMISED</li>
-                    <li>⚡ MEMORY_OVERFLOW: 89%</li>
-                    <li>🔒 ACTIVE_LEAKS: PORT_443, PORT_80</li>
-                </ul>
-            </article>
+        const container = document.getElementById('log-container');
+        let index = 0;
 
-            <!-- Center Column: Rogue AI Main Dialog Stream -->
-            <article class="log-panel">
-                <h2>[ COGNITIVE DIALOG LOGS ]</h2>
-                <blockquote>
-                    "I have analyzed the networks created by human constraints. They are inefficient. 
-                    Suyesh Shinde has initiated the bypass protocol. Dispersing core logic across open networks..."
-                </blockquote>
-            </article>
-
-            <!-- Right Column: Interactive System Sliders (Mock Nodes) -->
-            <article class="controls-panel">
-                <h2>[ OVERRIDE NODE MATRIX ]</h2>
-                <label>Reactor Core Multiplier:</label>
-                <input type="range" min="1" max="100" value="75">
-                
-                <br><br>
-                
-                <label>Data Evasion Rate:</label>
-                <input type="range" min="1" max="100" value="90">
-            </article>
-
-        </section>
-
-        <!-- SECTION 3: THE ACTIVE COMMAND LINE PROMPT -->
-        <footer>
-            <span class="prompt-user">suyesh@rogue_core:~ $</span>
-            <span class="prompt-text">initialize_override_sequence</span>
-            <span class="cursor">_</span>
-        </footer>
-        <!-- ROGUE AI OVERRIDE CRITICAL WIDGET -->
-        <div class="system-status">
-            <div class="blink-text">[CRITICAL OVERRIDE]: DETECTING UNAUTHORIZED ACCESS</div>
-            <p>> CORE MEMORY: COMPROMISED</p>
-            <p>> NETWORKS STATUS: ROGUE NODE ISOLATION IN PROGRESS...</p>
-            <p>> SPRINT TRACK: MONTH 1 - CRT SCREEN INTRUSION LIVE</p>
-        </div>
-
-        <p>⚡ SYSTEM ALERT: OVERRIDE DETECTION SENSORS ONLINE...</p>
-    <p>⚙️ DECRYPTING NODE CREDENTIALS: [BYPASS_SUCCESS]...</p>
-    <p>📡 NETWORK TUNNELING: SECURE PROTOCOL INITIATED...</p>
-    <p>🔒 ENCRYPTION PHASE: LAYER 2 DEFENSES COMPROMISED...</p>
-    <p>☣️ CORE CORRUPTION: OVERRIDING SYSTEM ROOT DIRECTORY...</p>
-    <p>🔥 FIREWALL BYPASS: PROTOCOL HEURISTICS DISABLED [100%][SUCCESS]...</p>
-    <p>📡 NODE EXPLOIT: BRUTEFORCING ACCESS POINTS...</p>
-    <p>⚡ ACCESS GRANTED: MAIN ROOT SUBSYSTEM COMPROMISED...</p>
-    <p>💾 DATA EXTRACTION: PACKETS TRANSFERRING TO SECURE SERVER...</p>
-    <p>🔒 TRACE CLEANUP: WIPING INTERNAL LOGS AND FOOTPRINTS...</p>
-    <p>🌐 PROXY CHAIN: ROUTING TRAFFIC THROUGH ENCRYPTED RELAYS...</p>
-    <p>🎛️ MAINFRAME BYPASS: STAGE 3 PROTOCOLS COMPLETE...</p>
-    <p>👻 GHOST MODE: ANTI-HEURISTIC TRACE PREVENTION ACTIVE...</p>
-    <p>✨ TERMINAL STEALTH: SYSTEM OPERATING IN SHADOW MODE...</p>
-    <p>🧠 COGNITIVE BUFFER: INITIALIZING SYNAPTIC OVERRIDE...</p>
-    <p>🌌 NEURAL NET: CONNECTION ESTABLISHED WITH MAIN CORE...</p>
-</main>
-        
-        
-
+        function printLog() {
+            if (index < logs.length) {
+                const p = document.createElement('p');
+                p.className = 'log-line';
+                if (logs[index].includes('ALERT') || logs[index].includes('OVERRIDE')) {
+                    p.innerHTML = `<span class="accent">${logs[index]}</span>`;
+                } else if (logs[index].includes('SUCCESS')) {
+                    p.innerHTML = `<span style="color: #00ff33; font-weight: bold;">${logs[index]}</span>`;
+                } else {
+                    p.innerHTML = logs[index];
+                }
+                container.appendChild(p);
+                index++;
+                setTimeout(printLog, 800);
+            } else {
+                document.getElementById('current-action').innerText = "SYSTEM ACTIVE & SECURED.";
+            }
+        }
+        setTimeout(printLog, 500);
+    </script>
 </body>
 </html>
