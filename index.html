@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stark Tech Hologram Mainframe</title>
-    <!-- Three.js Library CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #03080e;
+            background-color: #02060b;
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
             user-select: none;
         }
 
-        /* WebGL Canvas behind everything */
         #canvas-container {
             position: fixed;
             top: 0;
@@ -26,7 +24,7 @@
             z-index: 1;
         }
 
-        /* Tony Stark Glassmorphic Hologram UI */
+        /* Pure Floating Hologram Interface - NO SQUARE BORDER */
         .hologram-ui {
             position: absolute;
             top: 50%;
@@ -34,83 +32,53 @@
             transform: translate(-50%, -50%);
             width: 85vw;
             max-width: 900px;
-            height: 70vh;
+            height: 60vh;
             z-index: 10;
-            background: rgba(10, 35, 50, 0.25);
-            backdrop-filter: blur(16px) saturate(200%);
-            -webkit-backdrop-filter: blur(16px) saturate(200%);
-            border: 2px solid rgba(0, 213, 255, 0.7);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 
-                0 0 50px rgba(0, 213, 255, 0.3),
-                inset 0 0 30px rgba(0, 213, 255, 0.2);
-            color: #00d5ff;
+            color: #00f2ff;
             pointer-events: auto;
             display: flex;
             flex-direction: column;
             transition: transform 0.1s ease-out;
         }
 
-        /* Tech Header Grid */
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             color: #00f2ff;
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.8);
+            text-shadow: 0 0 25px rgba(0, 242, 255, 0.9);
             margin-top: 0;
-            border-bottom: 2px solid rgba(0, 213, 255, 0.3);
-            padding-bottom: 15px;
-            letter-spacing: 3px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .stark-badge {
-            font-size: 0.8rem;
-            background: rgba(0, 213, 255, 0.2);
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: 1px solid #00d5ff;
+            letter-spacing: 4px;
+            text-align: center;
         }
 
         #terminal-body {
             flex-grow: 1;
             overflow-y: auto;
-            margin-top: 15px;
-            padding-right: 10px;
-        }
-
-        #terminal-body::-webkit-scrollbar {
-            width: 6px;
-        }
-        #terminal-body::-webkit-scrollbar-thumb {
-            background: #00f2ff;
-            border-radius: 4px;
+            margin-top: 30px;
+            text-align: center;
         }
 
         .log-line {
-            margin: 8px 0;
+            margin: 12px 0;
             line-height: 1.6;
-            font-size: 0.95rem;
-            text-shadow: 0 0 8px rgba(0, 213, 255, 0.6);
+            font-size: 1.1rem;
+            text-shadow: 0 0 15px rgba(0, 242, 255, 0.85);
+            font-weight: bold;
         }
 
         .prompt {
             color: #ffaa00;
-            font-weight: bold;
-            text-shadow: 0 0 8px rgba(255, 170, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 170, 0, 0.7);
         }
 
         .cursor {
             display: inline-block;
-            width: 8px;
-            height: 16px;
+            width: 10px;
+            height: 18px;
             background-color: #00f2ff;
             animation: blink 0.8s infinite;
             vertical-align: middle;
             margin-left: 5px;
-            box-shadow: 0 0 10px #00f2ff;
+            box-shadow: 0 0 15px #00f2ff;
         }
 
         @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
@@ -118,26 +86,20 @@
 </head>
 <body>
 
-    <!-- WebGL 3D Arc-Reactor Particles -->
     <div id="canvas-container"></div>
 
-    <!-- Stark UI Layer -->
     <div class="hologram-ui" id="terminal-card">
-        <h1>
-            <span>⚙️ STARK INDUSTRIES MARK-LXXXV INTERFACE</span>
-            <span class="stark-badge">ARC CORE v4.5</span>
-        </h1>
+        <h1>⚙️ STARK SYSTEMS: MARK-LXXXV INTERFACE ACTIVATED</h1>
         <div id="terminal-body">
             <div id="log-wrapper"></div>
-            <p>
+            <p style="font-size: 1.2rem;">
                 <span class="prompt">rogue-shindecore@root:~#</span> 
-                <span id="typing-field" style="color: #00f2ff; text-shadow: 0 0 10px #00f2ff;"></span><span class="cursor"></span>
+                <span id="typing-field"></span><span class="cursor"></span>
             </p>
         </div>
     </div>
 
     <script>
-        // --- 1. THREE.JS 3D ARC FIELD SETUP ---
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
         
@@ -148,31 +110,23 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         container.appendChild(renderer.domElement);
 
-        // Hologram Starfield / Quantum Stream Particles
-        const particleCount = 2000;
+        const particleCount = 2500;
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
 
         for (let i = 0; i < particleCount * 3; i += 3) {
-            positions[i] = (Math.random() - 0.5) * 90;
-            positions[i+1] = (Math.random() - 0.5) * 90;
-            positions[i+2] = (Math.random() - 0.5) * 90;
+            positions[i] = (Math.random() - 0.5) * 95;
+            positions[i+1] = (Math.random() - 0.5) * 95;
+            positions[i+2] = (Math.random() - 0.5) * 95;
 
-            // Stark Colors: Pure Arc Cyan, Electric Deep Blue, and White sparks
             const rand = Math.random();
             if (rand > 0.4) {
-                colors[i] = 0.0;     // R
-                colors[i+1] = 0.83;  // G
-                colors[i+2] = 1.0;   // B (Cyan)
+                colors[i] = 0.0; colors[i+1] = 0.85; colors[i+2] = 1.0;
             } else if (rand > 0.1) {
-                colors[i] = 0.1; 
-                colors[i+1] = 0.4; 
-                colors[i+2] = 0.9;   // Deep Blue
+                colors[i] = 0.05; colors[i+1] = 0.3; colors[i+2] = 0.85;
             } else {
-                colors[i] = 1.0; 
-                colors[i+1] = 1.0; 
-                colors[i+2] = 1.0;   // White Sparkle
+                colors[i] = 1.0; colors[i+1] = 1.0; colors[i+2] = 1.0;
             }
         }
 
@@ -180,40 +134,31 @@
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
         const material = new THREE.PointsMaterial({
-            size: 0.25,
+            size: 0.22,
             vertexColors: true,
             transparent: true,
-            opacity: 0.75,
+            opacity: 0.8,
             blending: THREE.AdditiveBlending
         });
 
         const particleSystem = new THREE.Points(geometry, material);
         scene.add(particleSystem);
 
-        // Smooth Mouse Rotation Effect (Tony Stark Screen Tilt)
         let mouseX = 0, mouseY = 0;
         const terminalCard = document.getElementById('terminal-card');
 
         document.addEventListener('mousemove', (event) => {
             mouseX = (event.clientX / window.innerWidth) * 2 - 1;
             mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-
-            // Tilt layout dynamically
-            terminalCard.style.transform = `translate(-50%, -50%) rotateY(${mouseX * 12}deg) rotateX(${-mouseY * 12}deg)`;
+            terminalCard.style.transform = `translate(-50%, -50%) rotateY(${mouseX * 18}deg) rotateX(${-mouseY * 18}deg)`;
         });
 
-        // 3D Animation Loop
         function animate() {
             requestAnimationFrame(animate);
-
-            // Fast particle stream movement
-            particleSystem.rotation.x += 0.0015;
-            particleSystem.rotation.y += 0.0020;
-
-            // Float physics response
-            particleSystem.rotation.x += (mouseY * 0.04 - particleSystem.rotation.x) * 0.05;
-            particleSystem.rotation.y += (mouseX * 0.04 - particleSystem.rotation.y) * 0.05;
-
+            particleSystem.rotation.x += 0.0018;
+            particleSystem.rotation.y += 0.0022;
+            particleSystem.rotation.x += (mouseY * 0.05 - particleSystem.rotation.x) * 0.05;
+            particleSystem.rotation.y += (mouseX * 0.05 - particleSystem.rotation.y) * 0.05;
             renderer.render(scene, camera);
         }
         animate();
@@ -224,15 +169,11 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-
-        // --- 2. J.A.R.V.I.S. DIAGNOSTICS LOG ENGINE ---
         const logData = [
-            "⚡ [ONLINE] ARC REACTOR POWER OUTPUT STABLE AT 100%.",
-            "🛡️ [SHIELD] ACTIVATING PROTOCOL: PLANETARY DEFENSE BUFFER...",
-            "⚙️ [DIAGNOSTICS] NANOTECH RECONFIGURATORS STANDING BY...",
-            "🧠 [AI CORE] SYNCING WITH rogue-shindecore CENTRAL TERMINAL...",
-            "📡 [LINK] ENCRYPTED SAT-LINK ACTIVE WITH DEEP SPACE ARRAYS...",
-            "💎 [DEPLOY] HOLOGRAPHIC SPECTRAL VIEWPORT INITIALIZED STABLE."
+            "⚡ [ONLINE] ARC CORE DIAGNOSTICS DETECTED COMPLETION.",
+            "🛡️ [PROXIMITY] GLOBAL BACKLOG SYSTEM SYNC COMPLETED.",
+            "🧠 [AI INTEGRATION] MAIN NEURAL HUB DEPLOYED...",
+            "🟩 [STARK TECH] DEPLOYMENT STABLE. STANDING BY, SIR."
         ];
 
         const logWrapper = document.getElementById('log-wrapper');
@@ -251,28 +192,19 @@
                         cIndex++;
                     } else {
                         clearInterval(interval);
-
                         const div = document.createElement('div');
                         div.className = 'log-line';
-                        
-                        if (textStr.includes('ONLINE') || textStr.includes('DEPLOY')) {
-                            div.innerHTML = `<span style="color: #ffffff; text-shadow: 0 0 12px #00f2ff; font-weight: bold;">${textStr}</span>`;
-                        } else {
-                            div.innerHTML = `<span>${textStr}</span>`;
-                        }
-
+                        div.innerHTML = `<span>${textStr}</span>`;
                         logWrapper.appendChild(div);
-                        document.getElementById('terminal-body').scrollTop = document.getElementById('terminal-body').scrollHeight;
-
                         dataIndex++;
-                        setTimeout(runTerminal, 600);
+                        setTimeout(runTerminal, 500);
                     }
-                }, 30);
+                }, 25);
             } else {
-                typingField.innerText = "ALL SYSTEMS OPERATIONAL. STANDING BY, SIR.";
+                typingField.innerText = "ARC REACTOR SYNCED. SHADOW PROTOCOL IS LIVE.";
             }
         }
-        setTimeout(runTerminal, 1000);
+        setTimeout(runTerminal, 800);
     </script>
 </body>
 </html>
