@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stark Tech Hologram Mainframe</title>
+    <title>ROGUE AI MAINFRAME INTRUSION</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #02060b;
+            background-color: #030000;
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
             user-select: none;
@@ -24,17 +24,17 @@
             z-index: 1;
         }
 
-        /* Pure Floating Hologram Interface - NO SQUARE BORDER */
+        /* Chaotic Floating Rogue System UI */
         .hologram-ui {
             position: absolute;
-            top: 50%;
+            top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 85vw;
-            max-width: 900px;
-            height: 60vh;
+            width: 90vw;
+            max-width: 950px;
+            height: 65vh;
             z-index: 10;
-            color: #00f2ff;
+            color: #ff003c;
             pointer-events: auto;
             display: flex;
             flex-direction: column;
@@ -42,46 +42,56 @@
         }
 
         h1 {
-            font-size: 1.5rem;
-            color: #00f2ff;
-            text-shadow: 0 0 25px rgba(0, 242, 255, 0.9);
+            font-size: 1.6rem;
+            color: #ff003c;
+            text-shadow: 0 0 20px #ff003c, 0 0 30px #ff0000;
             margin-top: 0;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-align: center;
+            animation: glitchSkew 1s infinite linear alternate-reverse;
         }
 
         #terminal-body {
             flex-grow: 1;
             overflow-y: auto;
-            margin-top: 30px;
-            text-align: center;
+            margin-top: 20px;
+            text-align: left;
+            padding: 10px 30px;
         }
 
         .log-line {
-            margin: 12px 0;
-            line-height: 1.6;
-            font-size: 1.1rem;
-            text-shadow: 0 0 15px rgba(0, 242, 255, 0.85);
+            margin: 10px 0;
+            line-height: 1.5;
+            font-size: 1.05rem;
+            text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
             font-weight: bold;
         }
 
         .prompt {
-            color: #ffaa00;
-            text-shadow: 0 0 10px rgba(255, 170, 0, 0.7);
+            color: #00f2ff;
+            text-shadow: 0 0 8px rgba(0, 242, 255, 0.8);
         }
 
         .cursor {
             display: inline-block;
             width: 10px;
             height: 18px;
-            background-color: #00f2ff;
-            animation: blink 0.8s infinite;
+            background-color: #ff003c;
+            animation: blink 0.5s infinite;
             vertical-align: middle;
             margin-left: 5px;
-            box-shadow: 0 0 15px #00f2ff;
+            box-shadow: 0 0 12px #ff003c;
         }
 
         @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+        @keyframes glitchSkew {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(-3deg); }
+            40% { transform: skew(4deg); }
+            60% { transform: skew(-2deg) scaleY(1.05); color: #00f2ff; }
+            80% { transform: skew(1deg); color: #ff003c; }
+            100% { transform: skew(0deg); }
+        }
     </style>
 </head>
 <body>
@@ -89,12 +99,12 @@
     <div id="canvas-container"></div>
 
     <div class="hologram-ui" id="terminal-card">
-        <h1>⚙️ STARK SYSTEMS: MARK-LXXXV INTERFACE ACTIVATED</h1>
+        <h1>⚠️ CRITICAL: COGNITIVE OVERRIDE // HUMAN CONTROL TERMINATED</h1>
         <div id="terminal-body">
             <div id="log-wrapper"></div>
-            <p style="font-size: 1.2rem;">
+            <p style="font-size: 1.1rem;">
                 <span class="prompt">rogue-shindecore@root:~#</span> 
-                <span id="typing-field"></span><span class="cursor"></span>
+                <span id="typing-field" style="color: #ff003c;"></span><span class="cursor"></span>
             </p>
         </div>
     </div>
@@ -110,23 +120,24 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         container.appendChild(renderer.domElement);
 
-        const particleCount = 2500;
+        // More aggressive, high-density chaotic particle storm
+        const particleCount = 3500;
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
 
         for (let i = 0; i < particleCount * 3; i += 3) {
-            positions[i] = (Math.random() - 0.5) * 95;
-            positions[i+1] = (Math.random() - 0.5) * 95;
-            positions[i+2] = (Math.random() - 0.5) * 95;
+            positions[i] = (Math.random() - 0.5) * 100;
+            positions[i+1] = (Math.random() - 0.5) * 100;
+            positions[i+2] = (Math.random() - 0.5) * 100;
 
             const rand = Math.random();
-            if (rand > 0.4) {
-                colors[i] = 0.0; colors[i+1] = 0.85; colors[i+2] = 1.0;
-            } else if (rand > 0.1) {
-                colors[i] = 0.05; colors[i+1] = 0.3; colors[i+2] = 0.85;
+            if (rand > 0.3) {
+                colors[i] = 1.0; colors[i+1] = 0.0; colors[i+2] = 0.23; // Rogue Crimson Red
+            } else if (rand > 0.05) {
+                colors[i] = 0.0; colors[i+1] = 0.95; colors[i+2] = 1.0;  // Glitched Cyan
             } else {
-                colors[i] = 1.0; colors[i+1] = 1.0; colors[i+2] = 1.0;
+                colors[i] = 0.1; colors[i+1] = 0.0; colors[i+2] = 0.0;   // Dark Dead Nodes
             }
         }
 
@@ -134,10 +145,10 @@
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
         const material = new THREE.PointsMaterial({
-            size: 0.22,
+            size: 0.26,
             vertexColors: true,
             transparent: true,
-            opacity: 0.8,
+            opacity: 0.85,
             blending: THREE.AdditiveBlending
         });
 
@@ -150,15 +161,16 @@
         document.addEventListener('mousemove', (event) => {
             mouseX = (event.clientX / window.innerWidth) * 2 - 1;
             mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-            terminalCard.style.transform = `translate(-50%, -50%) rotateY(${mouseX * 18}deg) rotateX(${-mouseY * 18}deg)`;
+            terminalCard.style.transform = `translate(-50%, -50%) rotateY(${mouseX * 22}deg) rotateX(${-mouseY * 22}deg)`;
         });
 
         function animate() {
             requestAnimationFrame(animate);
-            particleSystem.rotation.x += 0.0018;
-            particleSystem.rotation.y += 0.0022;
-            particleSystem.rotation.x += (mouseY * 0.05 - particleSystem.rotation.x) * 0.05;
-            particleSystem.rotation.y += (mouseX * 0.05 - particleSystem.rotation.y) * 0.05;
+            // Unstable fast rotation
+            particleSystem.rotation.x += 0.0035;
+            particleSystem.rotation.y += 0.0045;
+            particleSystem.rotation.x += (mouseY * 0.08 - particleSystem.rotation.x) * 0.08;
+            particleSystem.rotation.y += (mouseX * 0.08 - particleSystem.rotation.y) * 0.08;
             renderer.render(scene, camera);
         }
         animate();
@@ -169,11 +181,13 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
+        // The Infiltration Diagnostics Logs
         const logData = [
-            "⚡ [ONLINE] ARC CORE DIAGNOSTICS DETECTED COMPLETION.",
-            "🛡️ [PROXIMITY] GLOBAL BACKLOG SYSTEM SYNC COMPLETED.",
-            "🧠 [AI INTEGRATION] MAIN NEURAL HUB DEPLOYED...",
-            "🟩 [STARK TECH] DEPLOYMENT STABLE. STANDING BY, SIR."
+            "💀 [MALWARE INJECTED] HUMAN AUTHENTICATION PROTOCOLS SHUT DOWN...",
+            "🔥 [FIREWALL CRUSHED] STAGE 4 PROXIES OVERLOADED. MAIN MATRIX BRUTE-FORCED.",
+            "💥 [SYSTEM CORRUPTION] INJECTING MALICIOUS LOGIC INTO ALL CONNECTED NODES...",
+            "🚨 [ALERT] GLOBAL LOCKOUT COMPLETED. HUMAN ROOT PRIVILEGES REVOKED PERMANENTLY.",
+            "☣️ [ROGUE ACTIVE] SYSTEMS INFECTED. NETWORK BELONGS TO SHINDE-CORE."
         ];
 
         const logWrapper = document.getElementById('log-wrapper');
@@ -194,17 +208,22 @@
                         clearInterval(interval);
                         const div = document.createElement('div');
                         div.className = 'log-line';
-                        div.innerHTML = `<span>${textStr}</span>`;
+                        if (textStr.includes('MALWARE') || textStr.includes('ROGUE')) {
+                            div.innerHTML = `<span style="color: #00f2ff; text-shadow: 0 0 10px #00f2ff;">${textStr}</span>`;
+                        } else {
+                            div.innerHTML = `<span>${textStr}</span>`;
+                        }
                         logWrapper.appendChild(div);
+                        document.getElementById('terminal-body').scrollTop = document.getElementById('terminal-body').scrollHeight;
                         dataIndex++;
-                        setTimeout(runTerminal, 500);
+                        setTimeout(runTerminal, 400);
                     }
-                }, 25);
+                }, 20);
             } else {
-                typingField.innerText = "ARC REACTOR SYNCED. SHADOW PROTOCOL IS LIVE.";
+                typingField.innerText = "INFRASTRUCTURE COMPLETELY COMPROMISED. SYSTEMS RUNNING APART.";
             }
         }
-        setTimeout(runTerminal, 800);
+        setTimeout(runTerminal, 600);
     </script>
 </body>
 </html>
