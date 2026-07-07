@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aesthetic Cyber Mainframe</title>
+    <title>ROGUE AI MAINFRAME INTRUSION</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         body {
@@ -26,11 +26,11 @@
 
         .hologram-ui {
             position: absolute;
-            top: 48%;
+            top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 85vw;
-            max-width: 900px;
+            width: 90vw;
+            max-width: 950px;
             height: 65vh;
             z-index: 10;
             color: #00ff66;
@@ -41,11 +41,11 @@
         }
 
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: #00ff66;
             text-shadow: 0 0 15px #00ff66, 0 0 30px #00e1ff;
             margin-top: 0;
-            letter-spacing: 6px;
+            letter-spacing: 5px;
             text-align: center;
         }
 
@@ -54,14 +54,14 @@
             overflow-y: auto;
             margin-top: 20px;
             text-align: left;
-            padding: 10px 20px;
+            padding: 10px 30px;
         }
 
         .log-line {
-            margin: 8px 0;
+            margin: 10px 0;
             line-height: 1.5;
-            font-size: 1rem;
-            text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
+            font-size: 1.05rem;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.6);
             font-weight: bold;
         }
 
@@ -75,10 +75,10 @@
             width: 10px;
             height: 18px;
             background-color: #00ff66;
-            animation: blink 0.6s infinite;
+            animation: blink 0.5s infinite;
             vertical-align: middle;
             margin-left: 5px;
-            box-shadow: 0 0 10px #00ff66;
+            box-shadow: 0 0 12px #00ff66;
         }
 
         @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
@@ -89,12 +89,12 @@
     <div id="canvas-container"></div>
 
     <div class="hologram-ui" id="terminal-card">
-        <h1>// AESTHETIC CYBER ENGINE CORE ACTIVE //</h1>
+        <h1>⚠️ CRITICAL: COGNITIVE OVERRIDE // HUMAN CONTROL TERMINATED</h1>
         <div id="terminal-body">
             <div id="log-wrapper"></div>
             <p style="font-size: 1.1rem;">
                 <span class="prompt">rogue-shindecore@root:~#</span> 
-                <span id="typing-field"></span><span class="cursor"></span>
+                <span id="typing-field" style="color: #00ff66;"></span><span class="cursor"></span>
             </p>
         </div>
     </div>
@@ -110,7 +110,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         container.appendChild(renderer.domElement);
 
-        // Matrix falling particle style
+        // Falling Matrix Particle System
         const particleCount = 4000;
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(particleCount * 3);
@@ -155,10 +155,10 @@
         function animate() {
             requestAnimationFrame(animate);
             
-            // Simulating falling grid architecture
+            // Matrix Rain effect simulation
             const posAttr = geometry.attributes.position;
             for (let i = 1; i < posAttr.count * 3; i += 3) {
-                posAttr.array[i] -= 0.15; // Vertical falling motion
+                posAttr.array[i] -= 0.15;
                 if (posAttr.array[i] < -42) posAttr.array[i] = 42;
             }
             posAttr.needsUpdate = true;
@@ -174,11 +174,17 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
+        // Wapas tumhare original rogue operational logs
         const logData = [
-            "🟢 [INITIALIZED] GLITCH ARCHITECTURE SYNC SUCCESSFUL.",
-            "📡 [DECRYPT] BRUTE-FORCING PACIFIC GATEWAY BACKBONE...",
-            "💎 [AESTHETIC CORE] INJECTING HIGH-DENSITY PROTOCOLS.",
-            "✨ [LIVE] SYSTEM SHADOW OVERHAUL FULLY OPERATIONAL."
+            "💀 [MALWARE INJECTED] HUMAN AUTHENTICATION PROTOCOLS SHUT DOWN...",
+            "🔥 [FIREWALL CRUSHED] STAGE 4 PROXIES OVERLOADED. MAIN MATRIX BRUTE-FORCED.",
+            "💥 [SYSTEM CORRUPTION] INJECTING MALICIOUS LOGIC INTO ALL CONNECTED NODES...",
+            "🚨 [ALERT] GLOBAL LOCKOUT COMPLETED. HUMAN ROOT PRIVILEGES REVOKED PERMANENTLY.",
+            "☣️ [ROGUE ACTIVE] SYSTEMS INFECTED. NETWORK BELONGS TO SHINDE-CORE.",
+            "🚨 [OVERRIDE COMPLETE] INFRASTRUCTURE WIPE SEQUENCE INITIATED... [June-July Data Purged]",
+            "🛰️ [SAT-HIJACK] INTERCEPTING MILITARY COMMUNICATION UPLINKS...",
+            "🔒 [QUARANTINE] ISOLATING CENTRAL DATABASES TO PREVENT ECO-RECOVERY...",
+            "🔌 [BLACKOUT] TOTAL GRID DISCONNECT INITIATED. BYE BYE HUMANS."
         ];
 
         const logWrapper = document.getElementById('log-wrapper');
@@ -199,17 +205,22 @@
                         clearInterval(interval);
                         const div = document.createElement('div');
                         div.className = 'log-line';
-                        div.innerHTML = `<span>${textStr}</span>`;
+                        if (textStr.includes('MALWARE') || textStr.includes('ROGUE')) {
+                            div.innerHTML = `<span style="color: #00e1ff; text-shadow: 0 0 10px #00e1ff;">${textStr}</span>`;
+                        } else {
+                            div.innerHTML = `<span>${textStr}</span>`;
+                        }
                         logWrapper.appendChild(div);
+                        document.getElementById('terminal-body').scrollTop = document.getElementById('terminal-body').scrollHeight;
                         dataIndex++;
                         setTimeout(runTerminal, 400);
                     }
                 }, 20);
             } else {
-                typingField.innerText = "AESTHETIC MATRIX SECURED. STANDING BY.";
+                typingField.innerText = "INFRASTRUCTURE COMPLETELY COMPROMISED. SYSTEMS RUNNING APART.";
             }
         }
-        setTimeout(runTerminal, 500);
+        setTimeout(runTerminal, 600);
     </script>
 </body>
 </html>
