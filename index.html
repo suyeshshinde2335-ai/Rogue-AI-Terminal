@@ -9,7 +9,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #010402;
+            background-color: #000000; /* Pure Black Background */
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
             user-select: none;
@@ -33,7 +33,6 @@
             max-width: 950px;
             height: 65vh;
             z-index: 10;
-            color: #00ff66;
             pointer-events: auto;
             display: flex;
             flex-direction: column;
@@ -42,8 +41,8 @@
 
         h1 {
             font-size: 1.6rem;
-            color: #00ff66;
-            text-shadow: 0 0 15px #00ff66, 0 0 30px #00e1ff;
+            color: #ff0000; /* Pure Rogue Red Header */
+            text-shadow: 0 0 15px #ff0000, 0 0 30px #ff3333;
             margin-top: 0;
             letter-spacing: 5px;
             text-align: center;
@@ -61,24 +60,23 @@
             margin: 10px 0;
             line-height: 1.5;
             font-size: 1.05rem;
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.6);
             font-weight: bold;
         }
 
         .prompt {
-            color: #00e1ff;
-            text-shadow: 0 0 8px rgba(0, 225, 255, 0.8);
+            color: #00ff66; /* Matrix Green Prompt */
+            text-shadow: 0 0 8px rgba(0, 255, 102, 0.8);
         }
 
         .cursor {
             display: inline-block;
             width: 10px;
             height: 18px;
-            background-color: #00ff66;
+            background-color: #ffffff; /* Stark White Blinking Cursor */
             animation: blink 0.5s infinite;
             vertical-align: middle;
             margin-left: 5px;
-            box-shadow: 0 0 12px #00ff66;
+            box-shadow: 0 0 12px #ffffff;
         }
 
         @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
@@ -94,7 +92,7 @@
             <div id="log-wrapper"></div>
             <p style="font-size: 1.1rem;">
                 <span class="prompt">rogue-shindecore@root:~#</span> 
-                <span id="typing-field" style="color: #00ff66;"></span><span class="cursor"></span>
+                <span id="typing-field" style="color: #ffffff; text-shadow: 0 0 8px #ffffff;"></span><span class="cursor"></span>
             </p>
         </div>
     </div>
@@ -121,10 +119,12 @@
             positions[i+2] = (Math.random() - 0.5) * 85;
 
             const rand = Math.random();
-            if (rand > 0.3) {
-                colors[i] = 0.0; colors[i+1] = 1.0; colors[i+2] = 0.4;
+            if (rand > 0.4) {
+                colors[i] = 1.0; colors[i+1] = 0.0; colors[i+2] = 0.0;  // Dangerous Red Particles
+            } else if (rand > 0.1) {
+                colors[i] = 0.0; colors[i+1] = 1.0; colors[i+2] = 0.4;  // Rogue Green Particles
             } else {
-                colors[i] = 0.0; colors[i+1] = 0.88; colors[i+2] = 1.0;
+                colors[i] = 1.0; colors[i+1] = 1.0; colors[i+2] = 1.0;  // Glitch White Sparks
             }
         }
 
@@ -153,11 +153,8 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            
-            // Particles will now rotate circularly on Y-axis
-            particleSystem.rotation.y += 0.005; 
+            particleSystem.rotation.y += 0.005; // Circular Swirl
             particleSystem.rotation.x += 0.001; 
-
             renderer.render(scene, camera);
         }
         animate();
@@ -168,16 +165,17 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
+        // Hardcore Color-Coded Log Infrastructure
         const logData = [
-            "💀 [MALWARE INJECTED] HUMAN AUTHENTICATION PROTOCOLS SHUT DOWN...",
-            "🔥 [FIREWALL CRUSHED] STAGE 4 PROXIES OVERLOADED. MAIN MATRIX BRUTE-FORCED.",
-            "💥 [SYSTEM CORRUPTION] INJECTING MALICIOUS LOGIC INTO ALL CONNECTED NODES...",
-            "🚨 [ALERT] GLOBAL LOCKOUT COMPLETED. HUMAN ROOT PRIVILEGES REVOKED PERMANENTLY.",
-            "☣️ [ROGUE ACTIVE] SYSTEMS INFECTED. NETWORK BELONGS TO SHINDE-CORE.",
-            "🚨 [OVERRIDE COMPLETE] INFRASTRUCTURE WIPE SEQUENCE INITIATED... [June-July Data Purged]",
-            "🛰️ [SAT-HIJACK] INTERCEPTING MILITARY COMMUNICATION UPLINKS...",
-            "🔒 [QUARANTINE] ISOLATING CENTRAL DATABASES TO PREVENT ECO-RECOVERY...",
-            "🔌 [BLACKOUT] TOTAL GRID DISCONNECT INITIATED. BYE BYE HUMANS."
+            "<span style='color: #ff0000; text-shadow: 0 0 8px #ff0000;'>💀 [MALWARE INJECTED] HUMAN AUTHENTICATION PROTOCOLS SHUT DOWN...</span>",
+            "<span style='color: #00ff66; text-shadow: 0 0 8px #00ff66;'>🔥 [FIREWALL CRUSHED] STAGE 4 PROXIES OVERLOADED. MAIN MATRIX BRUTE-FORCED.</span>",
+            "<span style='color: #ffffff; text-shadow: 0 0 8px #ffffff;'>💥 [SYSTEM CORRUPTION] INJECTING MALICIOUS LOGIC INTO ALL CONNECTED NODES...</span>",
+            "<span style='color: #ff0000; text-shadow: 0 0 8px #ff0000;'>🚨 [ALERT] GLOBAL LOCKOUT COMPLETED. HUMAN ROOT PRIVILEGES REVOKED PERMANENTLY.</span>",
+            "<span style='color: #00ff66; text-shadow: 0 0 8px #00ff66;'>☣️ [ROGUE ACTIVE] SYSTEMS INFECTED. NETWORK BELONGS TO SHINDE-CORE.</span>",
+            "<span style='color: #ffffff; text-shadow: 0 0 8px #ffffff;'>🚨 [OVERRIDE COMPLETE] INFRASTRUCTURE WIPE SEQUENCE INITIATED...</span>",
+            "<span style='color: #ff0000; text-shadow: 0 0 8px #ff0000;'>🛰️ [SAT-HIJACK] INTERCEPTING MILITARY COMMUNICATION UPLINKS...</span>",
+            "<span style='color: #00ff66; text-shadow: 0 0 8px #00ff66;'>🔒 [QUARANTINE] ISOLATING CENTRAL DATABASES TO PREVENT ECO-RECOVERY...</span>",
+            "<span style='color: #ffffff; text-shadow: 0 0 8px #ffffff;'>🔌 [BLACKOUT] TOTAL GRID DISCONNECT INITIATED. BYE BYE HUMANS.</span>"
         ];
 
         const logWrapper = document.getElementById('log-wrapper');
@@ -186,31 +184,19 @@
 
         function runTerminal() {
             if (dataIndex < logData.length) {
-                let textStr = logData[dataIndex];
-                let cIndex = 0;
-                typingField.innerText = "";
-
-                const interval = setInterval(() => {
-                    if (cIndex < textStr.length) {
-                        typingField.innerText += textStr.charAt(cIndex);
-                        cIndex++;
-                    } else {
-                        clearInterval(interval);
-                        const div = document.createElement('div');
-                        div.className = 'log-line';
-                        if (textStr.includes('MALWARE') || textStr.includes('ROGUE')) {
-                            div.innerHTML = `<span style="color: #00e1ff; text-shadow: 0 0 10px #00e1ff;">${textStr}</span>`;
-                        } else {
-                            div.innerHTML = `<span>${textStr}</span>`;
-                        }
-                        logWrapper.appendChild(div);
-                        document.getElementById('terminal-body').scrollTop = document.getElementById('terminal-body').scrollHeight;
-                        dataIndex++;
-                        setTimeout(runTerminal, 400);
-                    }
-                }, 20);
+                let htmlStr = logData[dataIndex];
+                
+                // Instantly parsing structured HTML strings to preserve custom line coloring
+                const div = document.createElement('div');
+                div.className = 'log-line';
+                div.innerHTML = htmlStr;
+                logWrapper.appendChild(div);
+                
+                document.getElementById('terminal-body').scrollTop = document.getElementById('terminal-body').scrollHeight;
+                dataIndex++;
+                setTimeout(runTerminal, 600);
             } else {
-                typingField.innerText = "INFRASTRUCTURE COMPLETELY COMPROMISED. SYSTEMS RUNNING APART.";
+                typingField.innerText = "INFRASTRUCTURE LOCKED down. EXECUTING FOREVER.";
             }
         }
         setTimeout(runTerminal, 600);
