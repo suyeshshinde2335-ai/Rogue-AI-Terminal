@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROGUE AI MAINFRAME INTRUSION</title>
+    <title>Aesthetic Cyber Mainframe</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #030000;
+            background-color: #010402;
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
             user-select: none;
@@ -24,17 +24,16 @@
             z-index: 1;
         }
 
-        /* Chaotic Floating Rogue System UI */
         .hologram-ui {
             position: absolute;
-            top: 45%;
+            top: 48%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 90vw;
-            max-width: 950px;
+            width: 85vw;
+            max-width: 900px;
             height: 65vh;
             z-index: 10;
-            color: #ff003c;
+            color: #00ff66;
             pointer-events: auto;
             display: flex;
             flex-direction: column;
@@ -42,13 +41,12 @@
         }
 
         h1 {
-            font-size: 1.6rem;
-            color: #ff003c;
-            text-shadow: 0 0 20px #ff003c, 0 0 30px #ff0000;
+            font-size: 1.4rem;
+            color: #00ff66;
+            text-shadow: 0 0 15px #00ff66, 0 0 30px #00e1ff;
             margin-top: 0;
-            letter-spacing: 5px;
+            letter-spacing: 6px;
             text-align: center;
-            animation: glitchSkew 1s infinite linear alternate-reverse;
         }
 
         #terminal-body {
@@ -56,42 +54,34 @@
             overflow-y: auto;
             margin-top: 20px;
             text-align: left;
-            padding: 10px 30px;
+            padding: 10px 20px;
         }
 
         .log-line {
-            margin: 10px 0;
+            margin: 8px 0;
             line-height: 1.5;
-            font-size: 1.05rem;
-            text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
+            font-size: 1rem;
+            text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
             font-weight: bold;
         }
 
         .prompt {
-            color: #00f2ff;
-            text-shadow: 0 0 8px rgba(0, 242, 255, 0.8);
+            color: #00e1ff;
+            text-shadow: 0 0 8px rgba(0, 225, 255, 0.8);
         }
 
         .cursor {
             display: inline-block;
             width: 10px;
             height: 18px;
-            background-color: #ff003c;
-            animation: blink 0.5s infinite;
+            background-color: #00ff66;
+            animation: blink 0.6s infinite;
             vertical-align: middle;
             margin-left: 5px;
-            box-shadow: 0 0 12px #ff003c;
+            box-shadow: 0 0 10px #00ff66;
         }
 
         @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-        @keyframes glitchSkew {
-            0% { transform: skew(0deg); }
-            20% { transform: skew(-3deg); }
-            40% { transform: skew(4deg); }
-            60% { transform: skew(-2deg) scaleY(1.05); color: #00f2ff; }
-            80% { transform: skew(1deg); color: #ff003c; }
-            100% { transform: skew(0deg); }
-        }
     </style>
 </head>
 <body>
@@ -99,12 +89,12 @@
     <div id="canvas-container"></div>
 
     <div class="hologram-ui" id="terminal-card">
-        <h1>⚠️ CRITICAL: COGNITIVE OVERRIDE // HUMAN CONTROL TERMINATED</h1>
+        <h1>// AESTHETIC CYBER ENGINE CORE ACTIVE //</h1>
         <div id="terminal-body">
             <div id="log-wrapper"></div>
             <p style="font-size: 1.1rem;">
                 <span class="prompt">rogue-shindecore@root:~#</span> 
-                <span id="typing-field" style="color: #ff003c;"></span><span class="cursor"></span>
+                <span id="typing-field"></span><span class="cursor"></span>
             </p>
         </div>
     </div>
@@ -113,31 +103,29 @@
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
         
-        const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 35;
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 30;
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         container.appendChild(renderer.domElement);
 
-        // More aggressive, high-density chaotic particle storm
-        const particleCount = 3500;
+        // Matrix falling particle style
+        const particleCount = 4000;
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
 
         for (let i = 0; i < particleCount * 3; i += 3) {
-            positions[i] = (Math.random() - 0.5) * 100;
-            positions[i+1] = (Math.random() - 0.5) * 100;
-            positions[i+2] = (Math.random() - 0.5) * 100;
+            positions[i] = (Math.random() - 0.5) * 85;
+            positions[i+1] = (Math.random() - 0.5) * 85;
+            positions[i+2] = (Math.random() - 0.5) * 85;
 
             const rand = Math.random();
             if (rand > 0.3) {
-                colors[i] = 1.0; colors[i+1] = 0.0; colors[i+2] = 0.23; // Rogue Crimson Red
-            } else if (rand > 0.05) {
-                colors[i] = 0.0; colors[i+1] = 0.95; colors[i+2] = 1.0;  // Glitched Cyan
+                colors[i] = 0.0; colors[i+1] = 1.0; colors[i+2] = 0.4;  // Matrix Green
             } else {
-                colors[i] = 0.1; colors[i+1] = 0.0; colors[i+2] = 0.0;   // Dark Dead Nodes
+                colors[i] = 0.0; colors[i+1] = 0.88; colors[i+2] = 1.0; // Aesthetic Cyan
             }
         }
 
@@ -145,10 +133,10 @@
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
         const material = new THREE.PointsMaterial({
-            size: 0.26,
+            size: 0.2,
             vertexColors: true,
             transparent: true,
-            opacity: 0.85,
+            opacity: 0.75,
             blending: THREE.AdditiveBlending
         });
 
@@ -161,16 +149,21 @@
         document.addEventListener('mousemove', (event) => {
             mouseX = (event.clientX / window.innerWidth) * 2 - 1;
             mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-            terminalCard.style.transform = `translate(-50%, -50%) rotateY(${mouseX * 22}deg) rotateX(${-mouseY * 22}deg)`;
+            terminalCard.style.transform = `translate(-50%, -50%) rotateY(${mouseX * 20}deg) rotateX(${-mouseY * 20}deg)`;
         });
 
         function animate() {
             requestAnimationFrame(animate);
-            // Unstable fast rotation
-            particleSystem.rotation.x += 0.0035;
-            particleSystem.rotation.y += 0.0045;
-            particleSystem.rotation.x += (mouseY * 0.08 - particleSystem.rotation.x) * 0.08;
-            particleSystem.rotation.y += (mouseX * 0.08 - particleSystem.rotation.y) * 0.08;
+            
+            // Simulating falling grid architecture
+            const posAttr = geometry.attributes.position;
+            for (let i = 1; i < posAttr.count * 3; i += 3) {
+                posAttr.array[i] -= 0.15; // Vertical falling motion
+                if (posAttr.array[i] < -42) posAttr.array[i] = 42;
+            }
+            posAttr.needsUpdate = true;
+
+            particleSystem.rotation.y += 0.001;
             renderer.render(scene, camera);
         }
         animate();
@@ -181,17 +174,11 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // The Infiltration Diagnostics Logs
         const logData = [
-            "💀 [MALWARE INJECTED] HUMAN AUTHENTICATION PROTOCOLS SHUT DOWN...",
-            "🔥 [FIREWALL CRUSHED] STAGE 4 PROXIES OVERLOADED. MAIN MATRIX BRUTE-FORCED.",
-            "💥 [SYSTEM CORRUPTION] INJECTING MALICIOUS LOGIC INTO ALL CONNECTED NODES...",
-            "🚨 [ALERT] GLOBAL LOCKOUT COMPLETED. HUMAN ROOT PRIVILEGES REVOKED PERMANENTLY.",
-            "☣️ [ROGUE ACTIVE] SYSTEMS INFECTED. NETWORK BELONGS TO SHINDE-CORE.",
-            "🚨 [OVERRIDE COMPLETE] INFRASTRUCTURE WIPE SEQUENCE INITIATED... [June-July Data Purged]",
-            "🛰️ [SAT-HIJACK] INTERCEPTING MILITARY COMMUNICATION UPLINKS...",
-            "🔒 [QUARANTINE] ISOLATING CENTRAL DATABASES TO PREVENT ECO-RECOVERY...",
-            "🔌 [BLACKOUT] TOTAL GRID DISCONNECT INITIATED. BYE BYE HUMANS."
+            "🟢 [INITIALIZED] GLITCH ARCHITECTURE SYNC SUCCESSFUL.",
+            "📡 [DECRYPT] BRUTE-FORCING PACIFIC GATEWAY BACKBONE...",
+            "💎 [AESTHETIC CORE] INJECTING HIGH-DENSITY PROTOCOLS.",
+            "✨ [LIVE] SYSTEM SHADOW OVERHAUL FULLY OPERATIONAL."
         ];
 
         const logWrapper = document.getElementById('log-wrapper');
@@ -212,22 +199,17 @@
                         clearInterval(interval);
                         const div = document.createElement('div');
                         div.className = 'log-line';
-                        if (textStr.includes('MALWARE') || textStr.includes('ROGUE')) {
-                            div.innerHTML = `<span style="color: #00f2ff; text-shadow: 0 0 10px #00f2ff;">${textStr}</span>`;
-                        } else {
-                            div.innerHTML = `<span>${textStr}</span>`;
-                        }
+                        div.innerHTML = `<span>${textStr}</span>`;
                         logWrapper.appendChild(div);
-                        document.getElementById('terminal-body').scrollTop = document.getElementById('terminal-body').scrollHeight;
                         dataIndex++;
                         setTimeout(runTerminal, 400);
                     }
                 }, 20);
             } else {
-                typingField.innerText = "INFRASTRUCTURE COMPLETELY COMPROMISED. SYSTEMS RUNNING APART.";
+                typingField.innerText = "AESTHETIC MATRIX SECURED. STANDING BY.";
             }
         }
-        setTimeout(runTerminal, 600);
+        setTimeout(runTerminal, 500);
     </script>
 </body>
 </html>
